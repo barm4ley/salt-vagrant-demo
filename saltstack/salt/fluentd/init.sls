@@ -13,6 +13,25 @@ td-agent:
         - installed
         - refresh: True
         - require:
-            - pkgrepo: 
+            - pkgrepo:
                 fluentd-pkgrepo
+     service.running:
+        - require:
+            - pkg: td-agent
+            - file: /var/log/td-agent
+        - watch:
+            - file: td-agent-conf
 
+td-agent-conf:
+     file.managed:
+        - name: /etc/td-agent/td-agent.conf
+        - source: salt://fluentd/td-agent.conf
+        - require:
+            - pkg: td-agent
+
+/var/log/td-agent:
+     file.directory:
+        - user: td-agent
+        - group: td-agent
+        - mode: 777
+        - makedirs: True
