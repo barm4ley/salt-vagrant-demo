@@ -127,4 +127,5 @@ docker-py:
     {%- else %}
     - name: docker-py
     {%- endif %}
+    - name: docker-compose
 {% endif %}
